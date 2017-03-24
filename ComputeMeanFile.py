@@ -42,14 +42,16 @@ def npy2binaryproto(data):
         print "Error occurred! {}".format(e)
 
 def binaryproto2npy(binary):
-    blob = caffe.proto.caffe_pb2.BlobProto()
-    data = open(binary , 'rb' ).read()
-    blob.ParseFromString(data)
-    arr = np.array( caffe.io.blobproto_to_array(blob) )
-    out = arr[0]
-    return arr
-    #np.save( 'mean.npy' , out)
-
+    try:
+        blob = caffe.proto.caffe_pb2.BlobProto()
+        data = open(binary , 'rb' ).read()
+        blob.ParseFromString(data)
+        arr = np.array( caffe.io.blobproto_to_array(blob) )
+        out = arr[0]
+        return arr
+        #np.save( 'mean.npy' , out)
+    except Exception,e:
+        print "Error occurred! {}".format(e)
 
 if __name__ == "__main__":
     print "Computing the mean of all the training images..."
